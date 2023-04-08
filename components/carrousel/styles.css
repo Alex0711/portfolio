@@ -1,0 +1,44 @@
+.parallax-container {
+  perspective: 2rem;
+  perspective-origin: 50% -200%;
+  width: 100%;
+  position: relative;
+  height: 80vh;
+  overflow-x: hidden;
+}
+
+.box {
+  position: relative; /* en lugar de absolute */
+  transform-style: preserve-3d;
+  transform-origin: center center;
+
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  width: 50vw;
+  transform: 0 50%;
+  transition: transform 0.4s ease-in-out;
+}
+
+.target {
+  /* transform: scale(1.1); */
+  /* z-index: 2; */
+}
+
+.left {
+    transform: translateZ(-0.1rem) translateX(-10%) rotateY(-10deg);
+
+  /* z-index: 1; */
+}
+
+.right {
+    transform: translateZ(-0.1rem) translateX(10%) rotateY(10deg);
+
+  /* z-index: 1; */
+}
+
+.back {
+    transform: translateZ(-0.5rem) rotateY(180deg);
+
+  /* z-index: 1; */
+}
