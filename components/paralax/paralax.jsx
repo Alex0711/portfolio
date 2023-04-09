@@ -1,12 +1,7 @@
 "use client";
 import React, { useState, useRef, useEffect } from "react";
 import { HiChevronLeft, HiChevronRight } from "react-icons/hi2";
-import {
-  Box,
-  Button,
-  ButtonGroup,
-  useColorModeValue,
-} from "@chakra-ui/react";
+import { Box, Button, ButtonGroup } from "@chakra-ui/react";
 import { PROJECTS } from "../carrousel/projects";
 import { ProjectCard } from "./projectCard";
 
@@ -24,6 +19,7 @@ const Parallax = () => {
   const cardRefs = useRef([]);
 
   useEffect(() => {
+    // resize cards
     const cardHeights = cardRefs.current.map((cardRef) => cardRef.offsetHeight);
     const maxHeight = Math.max(...cardHeights);
     setMinHeight(maxHeight);
@@ -31,29 +27,27 @@ const Parallax = () => {
 
     window.addEventListener("resize", handleResize);
 
-    // const handleStart = () => setLoading(true);
-    // const handleComplete = () => setLoading(false);
-   
-    // window.addEventListener('beforeunload', handleStart);
-    // window.addEventListener('load', handleComplete);
+    // Move carousel with keyboard arrows
+    const handleKeyDown = (event) => {
+      if (event.key === "ArrowLeft") {
+        moveSlide(DIRECTION.BACK);
+      } else if (event.key === "ArrowRight") {
+        moveSlide(DIRECTION.NEXT);
+      }
+    };
+    document.addEventListener("keydown", handleKeyDown);
+
     return () => {
       window.removeEventListener("resize", handleResize);
-      // window.removeEventListener('beforeunload', handleStart);
-      // window.removeEventListener('load', handleComplete);
+      document.removeEventListener("keydown", handleKeyDown);
     };
-  
-    
   }, [cardRefs, width]);
 
   const moveSlide = (direction) => {
     if (direction === DIRECTION.BACK) {
       setCurrentIndex(currentIndex === 1 ? PROJECTS.length : currentIndex - 1);
-      // setDirection(DIRECTION.BACK);
-      console.log({ currentIndex });
     } else {
       setCurrentIndex(currentIndex === PROJECTS.length ? 1 : currentIndex + 1);
-      // setDirection(DIRECTION.NEXT);
-      console.log({ currentIndex });
     }
   };
 
@@ -61,61 +55,59 @@ const Parallax = () => {
     const positions = [
       "target",
       "right",
-      "back",
+      "back-r",
+      "back-l",
       "left",
       "target",
       "right",
-      "back",
+      "back-r",
+      "back-l",
       "left",
     ];
     return positions[currentIndex + index - 2];
   };
 
   return (
-    // <Box display="flex">
-    //   <Box className="carousel" >
     <>
-        {PROJECTS.map((project, index) => {
-          return (
-            <Box
-              className={`box box${index + 1} ${position(index + 1)}`}
-              key={index}
-              // minH={minHeight}
-            >
-              <ProjectCard project={project} />
-            </Box>
-          );
-        })}
-        <ButtonGroup
-          top="115vh"
-          // display="block"
-          pos="absolute"
-          left="5%"
-
-          w="90%"
-          display="flex"
-          justifyContent="space-between"
-          zIndex={4}
+      {PROJECTS.map((project, index) => {
+        return (
+          <Box
+            ref={(ref) => (cardRefs.current[index] = ref)}
+            className={`box box${index + 1} ${position(index + 1)}`}
+            key={index}
+            minH={minHeight}
+          >
+            <ProjectCard project={project} />
+          </Box>
+        );
+      })}
+      <ButtonGroup
+        top={{
+          base: `calc(80vh + ${minHeight / 8}px)`,
+          md: `calc(80vh + ${minHeight / 3}px)`,
+          lg: `calc(80vh + ${minHeight / 2}px)`,
+        }}
+        pos="absolute"
+        left="7%"
+        w="86%"
+        display="flex"
+        justifyContent="space-between"
+        zIndex={4}
+      >
+        <Button
+          onClick={() => moveSlide(DIRECTION.BACK)}
         >
-          <Button
-            onClick={() => moveSlide(DIRECTION.BACK)}
-            background={useColorModeValue("veryLightGrey", "veryDarkBlue")}
-            
-          >
-            {" "}
-            <HiChevronLeft />{" "}
-          </Button>
-          <Button
-            onClick={() => moveSlide(DIRECTION.NEXT)}
-            background={useColorModeValue("veryLightGrey", "veryDarkBlue")}
-          >
-            {" "}
-            <HiChevronRight />{" "}
-          </Button>
-        </ButtonGroup>
+          {" "}
+          <HiChevronLeft />{" "}
+        </Button>
+        <Button
+          onClick={() => moveSlide(DIRECTION.NEXT)}
+        >
+          {" "}
+          <HiChevronRight />{" "}
+        </Button>
+      </ButtonGroup>
     </>
-    //   </Box>
-    // </Box>
   );
 };
 

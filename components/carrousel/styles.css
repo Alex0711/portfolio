@@ -37,8 +37,12 @@
   /* z-index: 1; */
 }
 
-.back {
+.back-r {
     transform: translateZ(-0.5rem) rotateY(180deg);
 
   /* z-index: 1; */
+}
+
+.back-l {
+  transform: translateZ(-0.5rem) rotateY(180deg);
 }

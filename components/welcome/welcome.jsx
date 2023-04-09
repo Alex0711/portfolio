@@ -3,12 +3,13 @@ import { Box, Heading } from "@chakra-ui/react";
 const Welcome = () => {
   return (
     <Box
-      w="100%"
+      top="8vh"
+      w="90%"
       pos="relative"
-      left={0}
-      right={0}
+      left="4%"
+      right="4%"
     >
-      <Heading textAlign="center" >WELCOME TO MY PORTFOLIO</Heading>
+      <Heading textAlign="center" >Hello! I'm Alejandro Senger, a passionate full stack developer specialized in backend. This is my web portfolio, where you can find not only my projects but also my certifications.</Heading>
     </Box>
   );
 };

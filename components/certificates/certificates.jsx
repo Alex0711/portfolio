@@ -19,8 +19,8 @@ const Certificates = () => {
   const color = () => (colorMode === "dark" ? "lightText" : "darkText");
   const bg = () => (colorMode === "dark" ? "blue" : "turquoise");
 
-  return (
-    <Box display="flex" flexDir="column" alignItems="center">
+  return ( 
+    <Box display="flex" flexDir="column" alignItems="center" paddingTop="200vh" >
       <Card w="98%" background="transparent" shadow="none">
         <Introduction />
         <Card background="transparent" marginTop="1.2rem">

@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { Stack, Divider,  } from "@chakra-ui/react";
 import Welcome from "../components/welcome/welcome";
 // import Carousel from "../components/carrousel/carrousel";
@@ -11,7 +11,6 @@ import Footer from "../components/footer/footer";
 import Carousel from "../components/carrousel/funciona";
 
 export default function Home() {
-
   return (
     <main>
       <Stack className="parallax-container">   
@@ -21,10 +20,10 @@ export default function Home() {
         {/* <Divider /> */}
         {/* <Carousel /> */}
         {/* <Divider /> */}
-        <Parallax />
-        {/* <Certificates />
+        <Parallax/>
+        <Certificates />
         <Divider />
-        <Footer /> */}
+        <Footer />
       </Stack>
     </main>
   );
