@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from "react";
+import { useState } from "react";
 import {
   Accordion,
   AccordionPanel,
@@ -10,11 +10,12 @@ import {
   Card,
   CardBody,
   Collapse,
-  Image,
+  Image as ChakraImage,
   Link,
   Stack,
   Text,
 } from "@chakra-ui/react";
+import { GitHub } from "../icons/gitHub";
 
 const CertificatesList = ({ courses }) => {
   const [show, setShow] = useState(false);
@@ -47,9 +48,8 @@ const CertificatesList = ({ courses }) => {
                       target="_blank"
                       display="flex"
                     >
-                      <Image
+                      <ChakraImage
                         objectFit="contain"
-                        // maxW={{ base: "100%", md: "40%" }}
                         src={`https://drive.google.com/uc?id=${course.id}`}
                         alt={`${course.title}`}
                       />
@@ -67,8 +67,11 @@ const CertificatesList = ({ courses }) => {
                       {course.repo.length === 0 ? (
                         <></>
                       ) : (
-                        <Link href={course.repo} target="_blank">
-                          link to {course.title} Repo
+                        <Link display="flex" alignItems="center" href={course.repo} target="_blank">
+                          <Box w="1.2rem" >
+                            <GitHub />
+                          </Box>
+                          <Text fontSize="sm" >  &nbsp; {course.title} Repo </Text>
                         </Link>
                       )}
                     </Box>

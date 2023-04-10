@@ -2,7 +2,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import { HiChevronLeft, HiChevronRight } from "react-icons/hi2";
 import { Box, Button, ButtonGroup } from "@chakra-ui/react";
-import { PROJECTS } from "../carrousel/projects";
+import { PROJECTS } from "./projects";
 import { ProjectCard } from "./projectCard";
 
 const DIRECTION = {
@@ -10,7 +10,20 @@ const DIRECTION = {
   NEXT: "NEXT",
 };
 
-const Parallax = () => {
+const POSITIONS = [
+  "target",
+  "right",
+  "back-r",
+  "back-l",
+  "left",
+  "target",
+  "right",
+  "back-r",
+  "back-l",
+  "left",
+];
+
+const Carousel = () => {
   const [currentIndex, setCurrentIndex] = useState(1);
   const [minHeight, setMinHeight] = useState(0);
   const [width, setWidth] = useState(
@@ -24,7 +37,6 @@ const Parallax = () => {
     const maxHeight = Math.max(...cardHeights);
     setMinHeight(maxHeight);
     const handleResize = () => setWidth(window.innerWidth);
-
     window.addEventListener("resize", handleResize);
 
     // Move carousel with keyboard arrows
@@ -37,34 +49,25 @@ const Parallax = () => {
     };
     document.addEventListener("keydown", handleKeyDown);
 
+    //removing listeners
     return () => {
       window.removeEventListener("resize", handleResize);
       document.removeEventListener("keydown", handleKeyDown);
     };
-  }, [cardRefs, width]);
+  }, [cardRefs, width, currentIndex]);
 
   const moveSlide = (direction) => {
+    let newIndex = currentIndex;
     if (direction === DIRECTION.BACK) {
-      setCurrentIndex(currentIndex === 1 ? PROJECTS.length : currentIndex - 1);
+      newIndex = currentIndex === 1 ? PROJECTS.length : currentIndex - 1;
     } else {
-      setCurrentIndex(currentIndex === PROJECTS.length ? 1 : currentIndex + 1);
+      newIndex = currentIndex === PROJECTS.length ? 1 : currentIndex + 1;
     }
+    setCurrentIndex(newIndex);
   };
 
   const position = (index) => {
-    const positions = [
-      "target",
-      "right",
-      "back-r",
-      "back-l",
-      "left",
-      "target",
-      "right",
-      "back-r",
-      "back-l",
-      "left",
-    ];
-    return positions[currentIndex + index - 2];
+    return POSITIONS[currentIndex + index - 2];
   };
 
   return (
@@ -94,15 +97,11 @@ const Parallax = () => {
         justifyContent="space-between"
         zIndex={4}
       >
-        <Button
-          onClick={() => moveSlide(DIRECTION.BACK)}
-        >
+        <Button onClick={() => moveSlide(DIRECTION.BACK)}>
           {" "}
           <HiChevronLeft />{" "}
         </Button>
-        <Button
-          onClick={() => moveSlide(DIRECTION.NEXT)}
-        >
+        <Button onClick={() => moveSlide(DIRECTION.NEXT)}>
           {" "}
           <HiChevronRight />{" "}
         </Button>
@@ -111,4 +110,4 @@ const Parallax = () => {
   );
 };
 
-export default Parallax;
+export default Carousel;

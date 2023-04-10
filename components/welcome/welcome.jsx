@@ -9,7 +9,7 @@ const Welcome = () => {
       left="4%"
       right="4%"
     >
-      <Heading textAlign="center" >Hello! I'm Alejandro Senger, a passionate full stack developer specialized in backend. This is my web portfolio, where you can find not only my projects but also my certifications.</Heading>
+      <Heading textAlign="center" >Hi! I&apos;m Alejandro Senger, a passionate full stack developer specialized in backend. This is my web portfolio, where you can find not only my projects but also my certifications.</Heading>
     </Box>
   );
 };

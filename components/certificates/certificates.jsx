@@ -14,7 +14,7 @@ import CertificatesList from "./certificatesList";
 import { COURSES } from "./courses";
 
 const Certificates = () => {
-  const { colorMode, toggleColorMode } = useColorMode();
+  const { colorMode } = useColorMode();
 
   const color = () => (colorMode === "dark" ? "lightText" : "darkText");
   const bg = () => (colorMode === "dark" ? "blue" : "turquoise");

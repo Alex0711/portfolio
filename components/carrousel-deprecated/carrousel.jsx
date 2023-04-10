@@ -13,7 +13,7 @@ import {
   Text,
 } from "@chakra-ui/react";
 
-import { PROJECTS } from "./projects";
+import { PROJECTS } from "../paralaxCarousel/projects";
 const videos = [
   {
     src: "https://drive.google.com/uc?id=11sD14mQH7DKa2cRVWfl3lbDE5HJgbajb",

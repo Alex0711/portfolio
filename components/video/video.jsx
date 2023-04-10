@@ -1,7 +1,6 @@
 "use client";
 import {
   AspectRatio,
-  Box,
   Card,
   CardBody,
   Stack,

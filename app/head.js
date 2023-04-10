@@ -1,7 +1,7 @@
 export default function Head() {
-    return (
-      <>
-        <title>My Portfolio </title>
-      </>
-    );
-  }
+  return (
+    <>
+      <title>My Portfolio </title>
+    </>
+  );
+}
