@@ -30,6 +30,27 @@ const Carousel = () => {
     typeof window !== "undefined" ? window.innerWidth : 0
   );
   const cardRefs = useRef([]);
+  const [touchStartX, setTouchStartX] = useState(null);
+  const [touchEndX, setTouchEndX] = useState(null);
+
+  // Move carousel with touchs
+  const handleTouchStart = (e, index) => {
+    console.log({index})
+    setTouchStartX(e.touches[0].clientX);
+  }
+  
+  const handleTouchEnd = (e, index) => {
+    console.log({index})
+    setTouchEndX(e.changedTouches[0].clientX);
+    const touchDiff = touchStartX - touchEndX;
+    console.log({touchStartX, touchEndX, touchDiff})
+    if (touchDiff > 0) {
+      moveSlide(DIRECTION.BACK);
+    } else if (touchDiff < 0) {
+      moveSlide(DIRECTION.NEXT);
+    }
+  }
+
 
   useEffect(() => {
     // resize cards
@@ -66,6 +87,7 @@ const Carousel = () => {
     setCurrentIndex(newIndex);
   };
 
+
   const position = (index) => {
     return POSITIONS[currentIndex + index - 2];
   };
@@ -79,6 +101,8 @@ const Carousel = () => {
             className={`box box${index + 1} ${position(index + 1)}`}
             key={index}
             minH={minHeight}
+            onTouchStart={(e) => handleTouchStart(e, index)}
+            onTouchEnd={(e) => handleTouchEnd(e, index)}
           >
             <ProjectCard project={project} />
           </Box>
