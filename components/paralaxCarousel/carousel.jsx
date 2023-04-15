@@ -32,21 +32,19 @@ const Carousel = () => {
   const cardRefs = useRef([]);
   const [touchStartX, setTouchStartX] = useState(null);
   const [touchEndX, setTouchEndX] = useState(null);
+  const [canMove, setCanMove] = useState(true);
 
   // Move carousel with touchs
   const handleTouchStart = (e, index) => {
-    console.log({index})
     setTouchStartX(e.touches[0].clientX);
   }
   
   const handleTouchEnd = (e, index) => {
-    console.log({index})
     setTouchEndX(e.changedTouches[0].clientX);
     const touchDiff = touchStartX - touchEndX;
-    console.log({touchStartX, touchEndX, touchDiff})
-    if (touchDiff > 0) {
+    if (touchDiff > 50) {
       moveSlide(DIRECTION.BACK);
-    } else if (touchDiff < 0) {
+    } else if (touchDiff < -50) {
       moveSlide(DIRECTION.NEXT);
     }
   }
@@ -79,12 +77,18 @@ const Carousel = () => {
 
   const moveSlide = (direction) => {
     let newIndex = currentIndex;
+    if (!canMove) return
+
     if (direction === DIRECTION.BACK) {
       newIndex = currentIndex === 1 ? PROJECTS.length : currentIndex - 1;
     } else {
       newIndex = currentIndex === PROJECTS.length ? 1 : currentIndex + 1;
     }
     setCurrentIndex(newIndex);
+    setCanMove(false)
+    setTimeout(()=> {
+      setCanMove(true)
+    }, [300])
   };
 
 
@@ -102,7 +106,7 @@ const Carousel = () => {
             key={index}
             minH={minHeight}
             onTouchStart={(e) => handleTouchStart(e, index)}
-            onTouchEnd={(e) => handleTouchEnd(e, index)}
+            onTouchMove={(e) => handleTouchEnd(e, index)}
           >
             <ProjectCard project={project} />
           </Box>
@@ -121,13 +125,11 @@ const Carousel = () => {
         justifyContent="space-between"
         zIndex={4}
       >
-        <Button onClick={() => moveSlide(DIRECTION.BACK)}>
-          {" "}
-          <HiChevronLeft />{" "}
+        <Button onClick={() => moveSlide(DIRECTION.BACK)} >
+          <HiChevronLeft />
         </Button>
-        <Button onClick={() => moveSlide(DIRECTION.NEXT)}>
-          {" "}
-          <HiChevronRight />{" "}
+        <Button onClick={() => moveSlide(DIRECTION.NEXT)} >
+          <HiChevronRight />
         </Button>
       </ButtonGroup>
     </>
