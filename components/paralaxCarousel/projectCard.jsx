@@ -11,7 +11,7 @@ import {
 } from "@chakra-ui/react";
 import { HiGlobeAlt } from "react-icons/hi2";
 import { GoMarkGithub } from "react-icons/go";
-import Image from "next/image";
+// import Image from "next/image";
 
 const ProjectCard = ({ project }) => {
   return (
@@ -25,12 +25,12 @@ const ProjectCard = ({ project }) => {
           display="block"
         >
           {project.type === "image" ? (
-            <Image
+            <img
               title={project.title}
               src={project.src}
               alt={`${project.title}`}
-              fill={true}
-              sizes="100%"
+              // fill={true}
+              // sizes="100%"
             />
           ) : (
             <iframe title={project.title} src={project.src} allowFullScreen />
